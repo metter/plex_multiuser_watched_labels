@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plex Show Flags</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(200px, 1fr)
+        ); /* Adjust the column width as needed */
+        grid-gap: 20px; /* Adjust the gap between items */
+        width: 80%; /* Adjust the width as needed */
+        margin-top: 20px; /* Added margin for spacing */
+      }
+
+      .show {
+        position: relative;
+        width: 100%; /* Ensure each show occupies the entire grid cell */
+      }
+
+      .show img {
+        width: 100%; /* Fill the container */
+        height: auto;
+        transition: transform 0.2s; /* Smooth transform on hover */
+      }
+
+      .show:hover img {
+        transform: scale(1.1); /* Slightly increase size on hover */
+      }
+
+      .show p {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-size: 16px;
+        text-shadow: 1px 1px 2px black; /* Enhance readability */
+      }
+
+      .show input[type="checkbox"] {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        right: 5px;
+        top: 5px;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Plex TV Shows</h1>
+    <div class="gallery">
+      <form method="post">
+        {% for show in shows %}
+        <div class="show">
+          <img src="{{ show.thumb }}" alt="{{ show.title }}" />
+          <p>{{ show.title }}</p>
+          <input
+            type="checkbox"
+            name="show_id"
+            value="{{ show.ratingKey }}"
+            onchange="this.form.submit();"
+            {%
+            if
+            show.has_keep
+            %}
+            checked
+            {%
+            endif
+            %}
+          />
+          <input
+            type="hidden"
+            name="label_action"
+            value="{% if show.has_keep %}remove{% else %}add{% endif %}"
+          />
+        </div>
+        {% endfor %}
+      </form>
+    </div>
+  </body>
+</html>
