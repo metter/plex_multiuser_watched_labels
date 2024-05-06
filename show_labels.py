@@ -46,7 +46,7 @@ def index():
 
     # Fetch shows (simplified example, adjust as needed)
     try:
-        response = requests.get(f"{PLEX_URL}library/sections/1/all", headers={'X-Plex-Token': PLEX_TOKEN, 'Accept': 'application/json'})
+        response = requests.get(f"{PLEX_URL}library/sections/2/all", headers={'X-Plex-Token': PLEX_TOKEN, 'Accept': 'application/json'})
         response.raise_for_status()
         shows = response.json()['MediaContainer']['Metadata']
     except requests.exceptions.RequestException as e:
