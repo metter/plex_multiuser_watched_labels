@@ -57,9 +57,10 @@ def index():
         'title': show['title'],
         'thumb': f"{PLEX_URL.rstrip('/')}/{show.get('thumb', '').lstrip('/')}?X-Plex-Token={PLEX_TOKEN}" if 'thumb' in show else None,
         'ratingKey': show['ratingKey'],
-        'has_keep': 'KEEP' in [label['tag'] for label in show.get('Genre', [])]
+        'has_keep': 'KEEP' in [label['tag'] for label in show.get('Labels', [])]
     } for show in shows]
 
+    print(shows_info)
     return render_template('index.html', shows=shows_info)
 
 if __name__ == '__main__':
